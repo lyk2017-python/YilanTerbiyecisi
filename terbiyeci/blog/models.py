@@ -8,10 +8,16 @@ class ShortNews(models.Model):
     created = models.DateTimeField(default=datetime.datetime.now)
     featured_for = models.DateTimeField(default=None, blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
-    score = models.SmallIntegerField()
-    report_count = models.PositiveSmallIntegerField()
+    score = models.SmallIntegerField(default=0)
+    report_count = models.PositiveSmallIntegerField(default=0)
     categories = models.ManyToManyField("Category")
+
+    def __str__(self):
+        return "#{id} {title}".format(id=self.id, title=self.title)
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return "#{id} {name}".format(id=self.id, name=self.name)
