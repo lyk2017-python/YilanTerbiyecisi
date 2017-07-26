@@ -11,12 +11,12 @@ class ShortNews(models.Model):
     score = models.SmallIntegerField(default=0)
     report_count = models.PositiveSmallIntegerField(default=0)
     categories = models.ManyToManyField("Category")
-
     def __str__(self):
         return "#{id} {title}".format(id=self.id, title=self.title)
 
 
 class Category(models.Model):
+    """Class for news categories"""
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
