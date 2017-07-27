@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{object.name}}
+<ul>
+    {%for obj in object.shortnews_set.all %}
+        <li><a href="{%url "news_detail" pk=obj.id%}">{{obj.title}}</a></li>
+    {%endfor%}
+</ul>
+
+<hr>
+<form action="." method="POST">
+{% csrf_token %}
+{{form.as_p}}
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>
