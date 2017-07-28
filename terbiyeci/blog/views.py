@@ -1,8 +1,9 @@
+from django.core.mail import send_mail
 from django.http import Http404
 from django.views import generic
 from django.shortcuts import render
 
-from blog.forms import CategoriedNewsForm
+from blog.forms import CategoriedNewsForm, ContactForm
 from blog.models import ShortNews, Category
 
 class AnasayfaView(generic.ListView):
@@ -59,3 +60,25 @@ class HaberView(generic.DetailView):
 
 class SSSView(generic.TemplateView):
     template_name = "blog/sss.html"
+
+
+class ContactFormView(generic.FormView):
+    form_class = ContactForm
+    template_name = "blog/contact.html"
+    success_url = "/"
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        from django.conf import settings
+        send_mail(
+            "YilanTerbiyecisi ContactForm : {}".format(data["title"]),
+            ("Sistemden size gelen bir bildirim var\n"
+             "---\n"
+             "{}\n"
+             "---\n"
+             "eposta={}\n"
+             "ip={}").format(data["body"], data["email"], self.request.META["REMOTE_ADDR"]),
+            settings.DEFAULT_FROM_EMAIL,
+            ["cediddi@yilanterbiyecisi.com"]
+        )
+        return super().form_valid(form)

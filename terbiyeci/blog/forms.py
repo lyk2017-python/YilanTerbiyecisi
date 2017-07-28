@@ -17,3 +17,8 @@ class CategoriedNewsForm(forms.ModelForm):
             "categories" : HiddenInput()
         }
 
+class ContactForm(forms.Form):
+    email = forms.EmailField()
+    title = forms.CharField()
+    body = forms.CharField(widget=forms.Textarea(attrs={"rows":2}))
+
