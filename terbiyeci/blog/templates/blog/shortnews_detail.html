@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "blog/theme.html" %}
+
+{% block body %}
 {{object.title|title}} <br>
 {{object.created|date:"m-d-Y"}} <br>
 <a href="{{object.source}}">{{object.source|truncatechars:7}}</a> <br>
-</body>
-</html>
+{% endblock %}

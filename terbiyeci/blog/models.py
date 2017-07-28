@@ -13,6 +13,7 @@ class ShortNews(models.Model):
     image = models.ImageField(blank=True, null=True)
     score = models.SmallIntegerField(default=0)
     report_count = models.PositiveSmallIntegerField(default=0)
+    hidden = models.BooleanField(default=False)
     categories = models.ManyToManyField("Category")
     parent_news = models.ForeignKey("self", blank=True, null=True, related_name="children_news")
     slug = models.SlugField(unique=True, blank=True, null=False)
@@ -50,5 +51,11 @@ def slug_belirle(sender, instance, *args, **kwargs):
             instance.slug = slugify(instance.title)
         else:
             raise AttributeError("Slug belirlemek için name ya da title gerek")
+    return instance
+
+@receiver(pre_save, sender=ShortNews)
+def auto_hidden(sender, instance, *args, **kwargs):
+    if instance.report_count >= 10:
+        instance.hidden = True
     return instance
 

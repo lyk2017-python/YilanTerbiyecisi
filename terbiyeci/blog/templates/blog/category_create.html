@@ -1,14 +1,8 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "blog/theme.html" %}
+{% block body %}
 {{object.name}}
 <ul>
-    {%for obj in object.shortnews_set.all %}
+    {%for obj in news_list %}
         <li><a href="{%url "news_detail" pk=obj.id%}">{{obj.title}}</a></li>
     {%endfor%}
 </ul>
@@ -20,5 +14,4 @@
     <button type="submit">Save</button>
 </form>
 
-</body>
-</html>
+{% endblock %}

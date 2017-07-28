@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "blog/theme.html" %}
+
+{% block body %}
 <h1>Haberler</h1>
 <h6><a href="{% url "newnews" %}">Yeni Haber</a></h6>
 <ul>
@@ -12,13 +8,5 @@
     <li><a href="{% url "news_detail" pk=obj.pk %}">{{obj.title|upper}}</a></li>
 {% endfor %}
 </ul>
-<h1>Kategoriler</h1>
-<ul>
-{% for obj in cat %}
-    <li><a href="{% url "category_detail" slug=obj.slug %}">{{obj.name|title}}</a></li>
-{% endfor %}
-</ul>
-
 İletişim için <a href="{% url "contact" %}">tıklayınız.</a>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YilanTerbiyecisi 00 01 10 11</title>
+</head>
+<body>
+<h3><a href="{% url "home" %}">Anasayfa</a></h3>
+<ul>
+    {% for kategori in categories %}
+        <li><a href="{% url "category_detail" slug=kategori.slug %}">{{kategori.name}}</a></li>
+
+    {% endfor %}
+</ul>
+<hr>
+{% block body %}
+{% endblock %}
+</body>
+</html>
+

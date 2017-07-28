@@ -7,7 +7,7 @@ from blog.forms import CategoriedNewsForm, ContactForm
 from blog.models import ShortNews, Category
 
 class AnasayfaView(generic.ListView):
-    model = ShortNews
+    queryset = ShortNews.objects.filter(hidden=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -51,11 +51,12 @@ class KategoriView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object"] = self.get_category()
+        context["news_list"] = context["object"].shortnews_set.filter(hidden=False)
         return context
 
 class HaberView(generic.DetailView):
     def get_queryset(self):
-        return ShortNews.objects.filter(report_count=0)
+        return ShortNews.objects.filter(hidden=False)
 
 
 class SSSView(generic.TemplateView):

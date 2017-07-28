@@ -34,7 +34,7 @@ class ShortNewsAdmin(admin.ModelAdmin):
         "score",
         "report_count",
         "categoryname",
-        "hashname"
+        "hidden"
     ]
     search_fields = [  # Liste ekranında aranılacak sütunlar
         "title",
@@ -59,7 +59,8 @@ class ShortNewsAdmin(admin.ModelAdmin):
                     "source",
                     "image",
                     "categories",
-                    "parent_news"
+                    "parent_news",
+                    "hidden"
                 ]
 
             }
@@ -82,6 +83,3 @@ class ShortNewsAdmin(admin.ModelAdmin):
             return ", ".join(names)
         else:
             return ""
-
-    def hashname(self, object):
-        return hash(object.title)
