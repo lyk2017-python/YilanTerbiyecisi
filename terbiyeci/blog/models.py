@@ -1,5 +1,7 @@
 import datetime
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 
 
@@ -13,7 +15,7 @@ class ShortNews(models.Model):
     report_count = models.PositiveSmallIntegerField(default=0)
     categories = models.ManyToManyField("Category")
     parent_news = models.ForeignKey("self", blank=True, null=True, related_name="children_news")
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True, null=False)
 
     def __str__(self):
         return "#{id} {title}".format(id=self.id, title=self.title)
@@ -24,10 +26,11 @@ class ShortNews(models.Model):
         verbose_name = "Short News"
         verbose_name_plural = "Short News"
 
+
 class Category(models.Model):
     """Class for news categories"""
     name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True, null=False)
 
     def __str__(self):
         return "#{id} {name}".format(id=self.id, name=self.name)
@@ -35,3 +38,17 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
+
+
+@receiver(pre_save, sender=Category)
+@receiver(pre_save, sender=ShortNews)
+def slug_belirle(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        if hasattr(sender, "name"):
+            instance.slug = slugify(instance.name)
+        elif hasattr(sender, "title"):
+            instance.slug = slugify(instance.title)
+        else:
+            raise AttributeError("Slug belirlemek için name ya da title gerek")
+    return instance
+
