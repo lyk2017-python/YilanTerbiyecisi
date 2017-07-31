@@ -4,4 +4,26 @@
 {{object.title|title}} <br>
 {{object.created|date:"m-d-Y"}} <br>
 <a href="{{object.source}}">{{object.source|truncatechars:7}}</a> <br>
+
+<hr>
+<span id="like_{{ object.id }}">{{object.score}}</span>
+<button onclick="like(true, {{ object.id }})">like</button>
+<button onclick="like(false, {{ object.id }})">dislike</button>
+
+<script>
+    function like(param, id) {
+        $.post({
+            data: {
+                "like": param,
+                "id": id,
+                "csrfmiddlewaretoken": getCookie('csrftoken')
+            },
+            url: "{% url "like_dislike" %}",
+            success: function (data) {
+                $("#like_"+data.id).text(data.like)
+            }
+        })
+    }
+</script>
+
 {% endblock %}

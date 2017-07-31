@@ -1,15 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>YilanTerbiyecisi 00 01 10 11</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="{% static "blog/js/main.js" %}"></script>
 </head>
 <body>
 <h3><a href="{% url "home" %}">Anasayfa</a></h3>
 <ul>
     {% for kategori in categories %}
         <li><a href="{% url "category_detail" slug=kategori.slug %}">{{kategori.name}}</a></li>
-
     {% endfor %}
 </ul>
 <hr>

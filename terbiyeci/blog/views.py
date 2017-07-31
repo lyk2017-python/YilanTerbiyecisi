@@ -1,10 +1,27 @@
 from django.core.mail import send_mail
-from django.http import Http404
+from django.db.models import F
+from django.http import Http404, HttpResponse, JsonResponse
 from django.views import generic
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from blog.forms import CategoriedNewsForm, ContactForm
 from blog.models import ShortNews, Category
+
+def like(request):
+    id = request.POST.get("id", default=None)
+    like = request.POST.get("like")
+    obj = get_object_or_404(ShortNews, id=int(id))
+    if like == "true":
+        obj.score = F("score") + 1
+        obj.save(update_fields=["score"])
+    elif like == "false":
+        obj.score = F("score") - 1
+        obj.save(update_fields=["score"])
+    else:
+        return HttpResponse(status=400)
+    obj.refresh_from_db()
+    return JsonResponse({"like": obj.score, "id": id})
+
 
 class AnasayfaView(generic.ListView):
     queryset = ShortNews.objects.filter(hidden=False)

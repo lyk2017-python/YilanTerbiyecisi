@@ -1,4 +1,6 @@
 import datetime
+
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -39,6 +41,10 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
+
+
+class User(AbstractUser):
+    biography = models.TextField()
 
 
 @receiver(pre_save, sender=Category)
