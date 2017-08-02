@@ -7,11 +7,12 @@
     {%endfor%}
 </ul>
 
-<hr>
-<form action="." method="POST">
-{% csrf_token %}
-{{form.as_p}}
-    <button type="submit">Save</button>
-</form>
-
+{% if request.user.is_authenticated %}
+    <hr>
+    <form action="." method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+        <button type="submit">Save</button>
+    </form>
+{% endif %}
 {% endblock %}

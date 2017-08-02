@@ -1,8 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.db.models import F
 from django.http import Http404, HttpResponse, JsonResponse
+from django.utils.decorators import method_decorator
 from django.views import generic
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from blog.forms import CategoriedNewsForm, ContactForm
 from blog.models import ShortNews, Category
@@ -23,6 +26,10 @@ def like(request):
     return JsonResponse({"like": obj.score, "id": id})
 
 
+class LoginCreateView(LoginRequiredMixin, generic.CreateView):
+    pass
+
+
 class AnasayfaView(generic.ListView):
     queryset = ShortNews.objects.filter(hidden=False)
 
@@ -31,7 +38,7 @@ class AnasayfaView(generic.ListView):
         context["cat"] = Category.objects.all()
         return context
 
-class HaberCreateView(generic.CreateView):
+class HaberCreateView(LoginCreateView):
     model = ShortNews
     success_url = "/"
     fields = [
@@ -49,6 +56,10 @@ class KategoriView(generic.CreateView):
     form_class = CategoriedNewsForm
     template_name = "blog/category_create.html"
     success_url = "."
+
+    @method_decorator(login_required)
+    def post(self, request, *a, **kw):
+        return super().post(request, *a, **kw)
 
     def get_category(self):
         query = Category.objects.filter(slug=self.kwargs["slug"])
