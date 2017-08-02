@@ -1,20 +1,19 @@
-{% load static %}
+{% load static bootstrap3 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>YilanTerbiyecisi 00 01 10 11</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="{% static "blog/js/main.js" %}"></script>
+    {% bootstrap_css %}
 </head>
 <body>
 <h3><a href="{% url "home" %}">Anasayfa</a></h3>
 {% if request.user.is_authenticated %}
     Merhaba {{ request.user.username }}, Çıkış yapmak için
-    <form action="{% url "logout" %}" method="post" >
+    <form action="{% url "logout" %}" method="post" style="display:inline;">
     {% csrf_token %}
     <input type="hidden" value="/" name="next">
-    <button>tıklayın</button>
+    <button type="submit" class="btn btn-xs btn-default" >tıklayın</button>
     </form>
 {% else %}
     Giriş yapmak için <a href="{% url "login" %}">tıklayın</a>
@@ -26,8 +25,14 @@
     {% endfor %}
 </ul>
 <hr>
-{% block body %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {% block body %}
 {% endblock %}
+    </div>
+</div>
+{% bootstrap_javascript jquery=1 %}
+<script src="{% static "blog/js/main.js" %}"></script>
 </body>
 </html>
 

@@ -12,17 +12,18 @@
 
 <script>
     function like(param, id) {
-        $.post({
-            data: {
+        $.post(
+            "{% url "like_dislike" %}",
+            {
                 "like": param,
                 "id": id,
                 "csrfmiddlewaretoken": getCookie('csrftoken')
             },
-            url: "{% url "like_dislike" %}",
-            success: function (data) {
-                $("#like_"+data.id).text(data.like)
-            }
-        })
+            function (data) {
+                $("#like_" + data.id).text(data.like)
+            },
+            "json"
+        )
     }
 </script>
 

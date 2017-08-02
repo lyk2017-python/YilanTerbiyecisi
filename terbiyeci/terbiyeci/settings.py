@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3',
     "blog",
 ]
 
@@ -127,3 +128,7 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "epostalar")
 DEFAULT_FROM_EMAIL = "noreply@yilanterbiyecisi.com"
 
 LOGIN_REDIRECT_URL = "/"
+
+BOOTSTRAP3 = {
+    'css_url': "/static/blog/css/simplex.css",
+}
