@@ -1,3 +1,4 @@
+from copy import copy
 from django.contrib import admin
 
 # Register your models here.
@@ -5,7 +6,9 @@ from django.contrib import admin
 
 # ShortNews
 # Category
-from blog.models import Category, ShortNews
+from django.contrib.auth.admin import UserAdmin
+
+from blog.models import Category, ShortNews, User
 
 
 class ShortNewsCategoryInline(admin.TabularInline):
@@ -16,6 +19,13 @@ class ShortNewsCategoryInline(admin.TabularInline):
 class ShortNewsChildrenInline(admin.StackedInline):
     model = ShortNews
     extra = 0
+
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        ("Extra", {"fields": ("biography",)}),
+    )
 
 
 @admin.register(Category)
