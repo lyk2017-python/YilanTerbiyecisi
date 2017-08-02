@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from blog.views import like, AnasayfaView, KategoriView, HaberView, SSSView, HaberCreateView, ContactFormView
+from blog.views import like, AnasayfaView, KategoriView, HaberView, SSSView, HaberCreateView, ContactFormView, \
+    RegistrationView
 
 urlpatterns = [
     url(r"^$", AnasayfaView.as_view(), name="home"),
@@ -9,4 +10,5 @@ urlpatterns = [
     url(r"^iletisim/$", ContactFormView.as_view(), name="contact"),
     url(r"^sss/$", SSSView.as_view(), name="faq"),
     url(r"^api/like$", like, name="like_dislike"),
+    url(r"^signup$", RegistrationView.as_view(), name="register"),
 ]

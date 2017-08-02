@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from django.db.models import F
-from django.http import Http404, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from blog.forms import CategoriedNewsForm, ContactForm
+from blog.forms import CategoriedNewsForm, ContactForm, CustomUserCreationForm
 from blog.models import ShortNews, Category
 
 def like(request):
@@ -110,4 +111,14 @@ class ContactFormView(generic.FormView):
             settings.DEFAULT_FROM_EMAIL,
             ["cediddi@yilanterbiyecisi.com"]
         )
+        return super().form_valid(form)
+
+
+class RegistrationView(generic.FormView):
+    form_class = CustomUserCreationForm
+    template_name = "blog/signup.html"
+    success_url = "/"
+
+    def form_valid(self, form):
+        form.save()
         return super().form_valid(form)

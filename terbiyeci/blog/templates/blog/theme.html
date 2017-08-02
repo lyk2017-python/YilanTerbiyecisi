@@ -18,6 +18,7 @@
     </form>
 {% else %}
     Giriş yapmak için <a href="{% url "login" %}">tıklayın</a>
+    Kayıt olmak için <a href="{% url "register" %}">tıklayın</a>
 {% endif %}
 <ul>
     {% for kategori in categories %}
