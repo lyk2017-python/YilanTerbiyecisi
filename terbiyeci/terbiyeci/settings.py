@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_gravatar',
     "blog",
 ]
 
@@ -132,3 +133,4 @@ LOGIN_REDIRECT_URL = "/"
 BOOTSTRAP3 = {
     'css_url': "/static/blog/css/simplex.css",
 }
+GRAVATAR_DEFAULT_SECURE  = False
