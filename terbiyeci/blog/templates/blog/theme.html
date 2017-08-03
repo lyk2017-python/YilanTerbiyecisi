@@ -1,4 +1,4 @@
-{% load static bootstrap3 %}
+{% load static bootstrap3 gravatar %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +16,7 @@
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
 
 {% if request.user.is_authenticated %}
+    <a href="{% gravatar_profile_url request.user.email %}">{% gravatar request.user.email 150 %}</a>
     Merhaba {{ request.user.username }}, Çıkış yapmak için
     <form action="{% url "logout" %}" method="post" style="display:inline;">
     {% csrf_token %}

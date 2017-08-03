@@ -1,3 +1,4 @@
 django
 pillow
 django-bootstrap3
+django-gravatar2
