@@ -7,7 +7,14 @@
     {% bootstrap_css %}
 </head>
 <body>
-<h3><a href="{% url "home" %}">Anasayfa</a></h3>
+<nav class="navbarnavbar-light bg-faded" style="background-color: #017081" >
+    <h3 align="center"  ><a href="{% url "home" %} ">Anasayfa</a>
+    <a href="{% url "home" %}">Hakkımızda</a>
+    <a href="{% url "newnews" %}">Haberler</a>
+    <a href="{% url "contact" %}">İletişim</a></h3>
+</nav>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+
 {% if request.user.is_authenticated %}
     Merhaba {{ request.user.username }}, Çıkış yapmak için
     <form action="{% url "logout" %}" method="post" style="display:inline;">
@@ -20,6 +27,7 @@
     Kayıt olmak için <a href="{% url "register" %}">tıklayın</a>
 {% endif %}
 <ul>
+</nav>
     {% for kategori in categories %}
         <li><a href="{% url "category_detail" slug=kategori.slug %}">{{kategori.name}}</a></li>
     {% endfor %}
@@ -30,6 +38,9 @@
         {% block body %}
 {% endblock %}
     </div>
+</div>
+<div>
+    <img src="yılanterbiyecisi.jpeg">
 </div>
 {% bootstrap_javascript jquery=1 %}
 <script src="{% static "blog/js/main.js" %}"></script>
